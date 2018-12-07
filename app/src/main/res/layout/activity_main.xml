@@ -44,4 +44,11 @@
             android:text="编辑来自服务端的数据后，保存到本地"
     />
 
+    <Button
+            android:id="@+id/btnLocalDataNum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="本地数据数量"
+    />
+
 </LinearLayout>

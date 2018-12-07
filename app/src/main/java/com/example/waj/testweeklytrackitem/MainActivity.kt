@@ -24,6 +24,13 @@ class MainActivity : Activity() {
         btnLocalInsert.setOnClickListener { localInsert() }
 
         btnLocalModify.setOnClickListener { localModify() }
+
+        btnLocalDataNum.setOnClickListener { displayLocalDataNum() }
+    }
+
+    private fun displayLocalDataNum() {
+        val count = DAO.localDataNum()
+        toast(count.toString())
     }
 
     private fun batchInsert() {
@@ -33,10 +40,14 @@ class MainActivity : Activity() {
         val code = root["code"].asInt
         val msg = root["message"].asString
         if(code!=0){
-            Toast.makeText(this,msg?:"",Toast.LENGTH_LONG).show()
+            toast(msg)
         }else{
             DAO.batchInsert(root)
         }
+    }
+
+    private fun toast(msg: String?) {
+        Toast.makeText(this, msg ?: "", Toast.LENGTH_LONG).show()
     }
 
     private fun readFile(fName:String): String {

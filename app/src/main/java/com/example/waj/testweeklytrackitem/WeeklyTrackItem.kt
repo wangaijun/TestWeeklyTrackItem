@@ -41,6 +41,7 @@ class WeeklyTrackItem : Serializable {
     var photoTypeValue: String? = null
     var expatiation:String? = null
     var taskId: String? = null
+    var localOperType:String? = null
 
     constructor()
 
