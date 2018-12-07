@@ -2,6 +2,7 @@ package com.example.waj.testweeklytrackitem
 
 import android.database.sqlite.SQLiteDatabase
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 
 object DAO{
     private const val ver = 1
@@ -15,7 +16,7 @@ object DAO{
     fun insert(item: String){
         val obj = Gson().fromJson<WeeklyTrackItem>(item,WeeklyTrackItem::class.java)
         val sql = "insert into ${DbHelper.TABLE_NAME} (id,taskId,body) values (?,?,?)"
-        db.execSQL(sql, arrayOf(obj.id,obj.taskId,item,item))
+        db.execSQL(sql, arrayOf(obj.id,obj.taskId,item))
     }
 
     fun delete(id:String){
@@ -46,5 +47,23 @@ object DAO{
             list.add(item)
         }
         return list
+    }
+
+    fun batchInsert(root: JsonObject) {
+        db.beginTransaction()  //手动设置开始事务
+
+        val data = root["data"] as JsonObject?
+        data?.let {
+            val jarr = data["items"].asJsonArray
+            jarr?.let {
+                val size = jarr.size()
+                for (i in 0..size) {
+                    val item = jarr[i].asJsonObject
+                    insert(item.toString())
+                }
+            }
+        }
+
+        db.setTransactionSuccessful() //设置事务处理成功，不设置会自动回滚不提交。
     }
 }
