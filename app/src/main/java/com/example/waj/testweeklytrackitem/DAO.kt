@@ -41,7 +41,7 @@ object DAO{
         data?.let {
             val jarr = data["items"].asJsonArray
             jarr?.let {
-                val size = jarr.size()
+                val size = jarr.size()-1
                 for (i in 0..size) {
                     val item = jarr[i].asJsonObject
                     insert(item.toString())
