@@ -12,12 +12,6 @@ object DAO{
         val sql = "insert into ${DbHelper.TABLE_NAME} (id,taskId,body) values (?,?,?)"
         db.execSQL(sql, arrayOf(item.id, item.taskId, Gson().toJson(item)))
     }
-    /**用于新增来自服务端的数据*/
-    fun insert(item: String){
-        val obj = Gson().fromJson<WeeklyTrackItem>(item,WeeklyTrackItem::class.java)
-        val sql = "insert into ${DbHelper.TABLE_NAME} (id,taskId,body) values (?,?,?)"
-        db.execSQL(sql, arrayOf(obj.id,obj.taskId,item))
-    }
 
     fun delete(id:String){
         val sql = "delete from ${DbHelper.TABLE_NAME} where id = ?"
@@ -65,5 +59,11 @@ object DAO{
         }
 
         db.setTransactionSuccessful() //设置事务处理成功，不设置会自动回滚不提交。
+    }
+    /**用于新增来自服务端的数据*/
+    fun insert(item: String){
+        val obj = Gson().fromJson<WeeklyTrackItem>(item,WeeklyTrackItem::class.java)
+        val sql = "insert into ${DbHelper.TABLE_NAME} (id,taskId,body) values (?,?,?)"
+        db.execSQL(sql, arrayOf(obj.id,obj.taskId,item))
     }
 }

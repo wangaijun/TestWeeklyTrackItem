@@ -15,16 +15,16 @@ class MainActivity : Activity() {
         setContentView(R.layout.activity_main)
 
         btnSave.setOnClickListener {
-            f()
+            batchInsert()
+        }
+
+        btnUpdate.setOnClickListener {
+            update()
         }
     }
 
-    private fun f() {
-        val istream = assets.open("data.txt")
-        val bs = ByteArray(1024*1024)
-        val len = istream.read(bs)
-        val str = String(bs,0,len)
-        Log.i("waj",str)
+    private fun batchInsert() {
+        val str = readFile("data.txt")
 
         val root = JsonParser().parse(str) as JsonObject
         val code = root["code"].asInt
@@ -34,5 +34,19 @@ class MainActivity : Activity() {
         }else{
             DAO.batchInsert(root)
         }
+    }
+
+    private fun readFile(fName:String): String {
+        val istream = assets.open(fName)
+        val bs = ByteArray(1024 * 1024)
+        val len = istream.read(bs)
+        val str = String(bs, 0, len)
+        Log.i("waj", str)
+        return str
+    }
+
+    private fun update(){
+        val s = readFile("one.txt")
+        DAO.update(s)
     }
 }
