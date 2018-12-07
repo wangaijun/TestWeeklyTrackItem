@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_main.*
@@ -14,13 +15,15 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btnSave.setOnClickListener {
-            batchInsert()
-        }
+        btnSave.setOnClickListener { batchInsert() }
 
-        btnUpdate.setOnClickListener {
-            update()
-        }
+        btnUpdate.setOnClickListener { update() }
+
+        btnDel.setOnClickListener { delete() }
+
+        btnLocalInsert.setOnClickListener { localInsert() }
+
+        btnLocalModify.setOnClickListener { localModify() }
     }
 
     private fun batchInsert() {
@@ -48,5 +51,22 @@ class MainActivity : Activity() {
     private fun update(){
         val s = readFile("one.txt")
         DAO.update(s)
+    }
+
+    private fun delete(){
+        DAO.delete("1579799726352226")
+    }
+
+    private fun localInsert(){
+        val s = readFile("one.txt")
+        val item = Gson().fromJson<WeeklyTrackItem>(s,WeeklyTrackItem::class.java)
+        item.id = "${System.currentTimeMillis()}"
+        DAO.insert(item)
+    }
+
+    private fun localModify(){
+        val s = readFile("one.txt")
+        val item = Gson().fromJson<WeeklyTrackItem>(s,WeeklyTrackItem::class.java)
+        DAO.update(item)
     }
 }

@@ -23,4 +23,25 @@
             android:text="将服务端的更新同步到本地数据中"
     />
 
+    <Button
+            android:id="@+id/btnDel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="根据id删除日常进度"
+    />
+
+    <Button
+            android:id="@+id/btnLocalInsert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="本地插入一条数据"
+    />
+
+    <Button
+            android:id="@+id/btnLocalModify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="编辑来自服务端的数据后，保存到本地"
+    />
+
 </LinearLayout>
